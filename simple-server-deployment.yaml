@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: simple-server-dp
+spec:
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: simple-server
+    spec:
+      containers:
+        - image: nicholaskajoh/k8s-test
+          imagePullPolicy: Always
+          name: simple-server
+          ports:
+            - containerPort: 3000
